@@ -118,7 +118,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <input type="text" id="model-input" value="llama3.2-vision" style="font-size:12px;padding:6px 10px;border:1px solid var(--border2);border-radius:var(--r);width:155px;font-family:monospace;background:var(--surface);color:var(--text)" />
       <input type="email" id="email-input" placeholder="labeller@deepen.ai" style="font-size:12px;padding:6px 10px;border:1px solid var(--border2);border-radius:var(--r);width:180px;background:var(--surface);color:var(--text)" title="Labeller email for JSON export" />
       <input type="text" id="labelset-input" placeholder="label_set_id" value="test" style="font-size:12px;padding:6px 10px;border:1px solid var(--border2);border-radius:var(--r);width:100px;background:var(--surface);color:var(--text)" title="label_set_id for JSON export" />
-      <button class="btn btn-blue" id="tag-btn" onclick="startTag()" disabled>â¶ Analyse &amp; Tag</button>
+      <button class="btn btn-blue" id="tag-btn" onclick="startTag()" disabled>Ã¢ÂÂ¶ Analyse &amp; Tag</button>
     </div>
   </div>
 
@@ -131,7 +131,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.899L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
     </svg>
     <p>Drop a video here, or click to browse</p>
-    <small>MP4 Â· MOV Â· AVI â any dashcam sequence</small>
+    <small>MP4 ÃÂ· MOV ÃÂ· AVI Ã¢ÂÂ any dashcam sequence</small>
   </div>
   <input type="file" id="file-input" accept="video/*" onchange="loadVideo(this.files[0])">
 
@@ -157,10 +157,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
     <div id="tag-section">
       <div id="tag-top">
-        <h2>Tags â click to add or remove</h2>
+        <h2>Tags Ã¢ÂÂ click to add or remove</h2>
         <div id="tag-actions">
           <span id="sel-count">0 selected</span>
-          <button class="btn" onclick="clearAll()">â Clear all</button>
+          <button class="btn" onclick="clearAll()">Ã¢ÂÂ Clear all</button>
         </div>
       </div>
       <div id="groups"></div>
@@ -169,23 +169,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="result-bar">
       <div id="result-note">Review tags above, then export.</div>
       <div id="export-row">
-        <button class="btn btn-blue" onclick="exportCSV()">â¬ Export CSV row</button>
-        <button class="btn" onclick="exportJSON()">â¬ Export JSON</button>
-        <button class="btn" onclick="copyJSON()">â Copy JSON</button>
-        <button class="btn" onclick="loadNew()">âº New video</button>
+        <button class="btn btn-blue" onclick="exportCSV()">Ã¢Â¬Â Export CSV row</button>
+        <button class="btn" onclick="exportJSON()">Ã¢Â¬Â Export JSON</button>
+        <button class="btn" onclick="copyJSON()">Ã¢ÂÂ Copy JSON</button>
+        <button class="btn" onclick="loadNew()">Ã¢ÂÂº New video</button>
       </div>
     </div>
   </div>
 
 </div>
 <script>
-// ââ EXACT TAXONOMY from ZOD Deepen AI Simplified ODD Taxonomy xlsx âââââââââââââ
-// Leaf tags only â intermediate grouping nodes excluded
+// Ã¢ÂÂÃ¢ÂÂ EXACT TAXONOMY from ZOD Deepen AI Simplified ODD Taxonomy xlsx Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// Leaf tags only Ã¢ÂÂ intermediate grouping nodes excluded
 // Correct names: traffic_control_devices (not traffic_control), road_surface_conditions (not road_surface)
 
 // Each leaf entry: { path_suffix, label }
 // path_suffix appended to root:group to form full path
-// label is exactly what shows on the chip â no spaces, underscores throughout
+// label is exactly what shows on the chip Ã¢ÂÂ no spaces, underscores throughout
 const TX = {
   ego_motion: {
     label: "Ego_Motion", cat: "ego", full: true,
@@ -214,7 +214,7 @@ const TX = {
       "yielding":               [{s:"nominal_vehicle",    l:"nominal_vehicle"},
                                  {s:"emergency_vehicle",  l:"emergency_vehicle"},
                                  {s:"vru",                l:"vru"}],
-      "â":                      [{s:"evasive_motion",     l:"evasive_motion"}],
+      "Ã¢ÂÂ":                      [{s:"evasive_motion",     l:"evasive_motion"}],
     }
   },
   primary_actor_class: {
@@ -341,12 +341,12 @@ for (const [root, def] of Object.entries(TX)) {
   for (const [grp, leaves] of Object.entries(def.groups)) {
     for (const {s} of leaves) {
       let path;
-      if (grp === 'â') {
+      if (grp === 'Ã¢ÂÂ') {
         path = `${root}:${s}`;
       } else if (root === 'primary_actor_class') {
         path = grp === 'actor' ? `${root}:${s}` : `${root}:${grp}:${s}`;
       } else if (grp === 'turning') {
-        // s is already "left:protected", "u_turn" etc â just prepend root:turning:
+        // s is already "left:protected", "u_turn" etc Ã¢ÂÂ just prepend root:turning:
         path = `${root}:turning:${s}`;
       } else {
         path = `${root}:${grp}:${s}`;
@@ -356,10 +356,10 @@ for (const [root, def] of Object.entries(TX)) {
   }
 }
 
-// ââ STATE âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ STATE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 let state = { file:null, name:'', selected:new Set(), aiSuggested:new Set() };
 
-// ââ KEY âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ KEY Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const ollamaUrlEl = document.getElementById('ollama-url'); const modelEl = document.getElementById('model-input');
 const emailEl = document.getElementById('email-input');
 const labelsetEl = document.getElementById('labelset-input');
@@ -375,7 +375,7 @@ emailEl.addEventListener('input', () => localStorage.setItem('ant_email', emailE
 labelsetEl.addEventListener('input', () => localStorage.setItem('ant_labelset', labelsetEl.value.trim()));
 function getOllamaUrl(){return(ollamaUrlEl.value.trim()||'http://localhost:11434').replace(/\/$/,'');} function getModel(){return modelEl.value.trim()||'llama3.2-vision';}
 
-// ââ DROP / LOAD âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ DROP / LOAD Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function handleDrop(e) {
   e.preventDefault();
   document.getElementById('drop-zone').classList.remove('drag');
@@ -392,7 +392,7 @@ function loadVideo(file) {
   vid.addEventListener('loadedmetadata', () => {
     const mb = (file.size / 1e6).toFixed(1);
     const dur = isFinite(vid.duration) ? vid.duration.toFixed(1) + 's' : '';
-    document.getElementById('vid-info').textContent = `${file.name}  Â·  ${mb} MB  ${dur ? 'Â·  ' + dur : ''}`;
+    document.getElementById('vid-info').textContent = `${file.name}  ÃÂ·  ${mb} MB  ${dur ? 'ÃÂ·  ' + dur : ''}`;
   }, { once: true });
   document.getElementById('drop-zone').style.display = 'none';
   document.getElementById('main-card').style.display = 'block';
@@ -411,19 +411,19 @@ function loadNew() {
   state = { file: null, name: '', selected: new Set(), aiSuggested: new Set() };
 }
 
-// ââ STATUS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ STATUS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function setStatus(cls, label, sub) {
   document.getElementById('sdot').className = cls;
   document.getElementById('slabel').textContent = label;
   document.getElementById('ssub').textContent = sub;
 }
 
-// ââ FRAME EXTRACTION ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ FRAME EXTRACTION Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function extractFrames(count = 8) {
   return new Promise((resolve, reject) => {
     const vid = document.getElementById('vid');
     const dur = vid.duration;
-    if (!dur || isNaN(dur)) { reject(new Error('Video metadata not ready â try again in a moment.')); return; }
+    if (!dur || isNaN(dur)) { reject(new Error('Video metadata not ready Ã¢ÂÂ try again in a moment.')); return; }
 
     const times = Array.from({ length: count }, (_, i) => dur * (0.05 + 0.9 * i / (count - 1)));
     const results = []; let idx = 0;
@@ -460,13 +460,13 @@ function extractFrames(count = 8) {
   });
 }
 
-// ââ AUTO TAG ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ AUTO TAG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 async function startTag() {
   if (!state.file) { alert('Load a video first.'); return; }
   const model = getModel();
 
   document.getElementById('tag-btn').disabled = true;
-  setStatus('thinking', 'Extracting framesâ¦', 'Sampling 8 keyframes from the videoâ¦');
+  setStatus('thinking', 'Extracting framesÃ¢ÂÂ¦', 'Sampling 8 keyframes from the videoÃ¢ÂÂ¦');
 
   let frames;
   try {
@@ -477,7 +477,7 @@ async function startTag() {
     return;
   }
 
-  setStatus('thinking', 'Analysingâ¦', 'Sending frames to Claude Vision APIâ¦');
+  setStatus('thinking', 'AnalysingÃ¢ÂÂ¦', 'Sending frames to Claude Vision APIÃ¢ÂÂ¦');
 
   // Build exact valid tag list for the prompt
   const validList = [...ALL_VALID].sort().map(t => '  ' + t).join('\n');
@@ -494,12 +494,12 @@ VALID TAGS (use ONLY these exact strings, no others):
 ${validList}
 
 INSTRUCTIONS:
-1. Return ONLY a valid JSON array of tag strings â no markdown, no explanation
+1. Return ONLY a valid JSON array of tag strings Ã¢ÂÂ no markdown, no explanation
 2. Use ONLY tags from the list above, copied exactly
 3. Cover all 5 categories: ego_motion, primary_actor_class, primary_actor_motion, primary_infra, environment
 4. For environment: always include one illumination tag + one precipitation tag + one road_surface_conditions tag
 5. For primary_actor_motion: only tag if an actor is clearly present
-6. Be thorough â include every clearly applicable tag
+6. Be thorough Ã¢ÂÂ include every clearly applicable tag
 7. For ego_motion pick all motions that clearly occur in the sequence
 
 Example output format (values are illustrative only):
@@ -532,7 +532,7 @@ Example output format (values are illustrative only):
     renderGroups();
     updateCount();
     setStatus('done', 'Done', `${valid.length} tags applied. Review below.`);
-    document.getElementById('result-note').textContent = `${valid.length} tags â verify and export when ready.`;
+    document.getElementById('result-note').textContent = `${valid.length} tags Ã¢ÂÂ verify and export when ready.`;
   } catch (e) {
     setStatus('err', 'API error', e.message);
     console.error(e);
@@ -540,7 +540,7 @@ Example output format (values are illustrative only):
   document.getElementById('tag-btn').disabled = false;
 }
 
-// ââ RENDER TAGS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ RENDER TAGS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function renderGroups() {
   const groupsEl = document.getElementById('groups');
   groupsEl.innerHTML = '';
@@ -554,14 +554,14 @@ function renderGroups() {
     let html = `<div class="tg-head"><span class="cat-pill cat-${def.cat}">${def.cat}</span><span>${def.label}</span>${badge}</div>`;
 
     for (const [grp, leaves] of Object.entries(def.groups)) {
-      const showSub = grp !== 'â' && grp !== 'actor';
+      const showSub = grp !== 'Ã¢ÂÂ' && grp !== 'actor';
       if (showSub) html += `<span class="sub-label">${grp}</span>`;
 
       html += `<div class="chips">`;
       for (const {s, l} of leaves) {
         // Build full path
         let full;
-        if (grp === 'â') {
+        if (grp === 'Ã¢ÂÂ') {
           full = `${root}:${s}`;
         } else if (root === 'primary_actor_class') {
           full = grp === 'actor' ? `${root}:${s}` : `${root}:${grp}:${s}`;
@@ -599,7 +599,7 @@ function updateCount() {
   document.getElementById('sel-count').textContent = `${state.selected.size} selected`;
 }
 
-// ââ EXPORT ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ EXPORT Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function exportCSV() {
   const cols = [...ALL_VALID].sort();
   const header = ['sequence_name', ...cols].join(',');
@@ -632,7 +632,7 @@ function exportJSON() {
     for (const [grp, leaves] of Object.entries(def.groups)) {
       for (const {s} of leaves) {
         let candidate;
-        if (grp === 'â') candidate = `${root}:${s}`;
+        if (grp === 'Ã¢ÂÂ') candidate = `${root}:${s}`;
         else if (root === 'primary_actor_class') candidate = grp === 'actor' ? `${root}:${s}` : `${root}:${grp}:${s}`;
         else if (grp === 'turning') candidate = `${root}:turning:${s}`;
         else candidate = `${root}:${grp}:${s}`;
@@ -640,7 +640,7 @@ function exportJSON() {
         if (candidate === full) {
           // attribute key = group name, value = leaf s
           // Special cases matching reference JSON keys:
-          let attrKey = grp === 'â' ? s  // evasive_motion -> key is itself
+          let attrKey = grp === 'Ã¢ÂÂ' ? s  // evasive_motion -> key is itself
             : grp === 'actor' ? 'primary_actor_class'
             : grp === 'turning' ? 'turning'
             : grp;  // cruising, following, longitudinal, lateral, road_type, road_geometry, etc.
@@ -690,8 +690,8 @@ function copyJSON() {
   navigator.clipboard.writeText(JSON.stringify(out, null, 2))
     .then(() => {
       const btn = event.currentTarget;
-      btn.textContent = 'â Copied!';
-      setTimeout(() => btn.textContent = 'â Copy JSON', 1600);
+      btn.textContent = 'Ã¢ÂÂ Copied!';
+      setTimeout(() => btn.textContent = 'Ã¢ÂÂ Copy JSON', 1600);
     })
     .catch(() => alert(JSON.stringify(out, null, 2)));
 }
