@@ -166,15 +166,40 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
 
     <div id="result-bar">
-      <div id="result-note">Review tags above, then export.</div>
+      <div id="result-note">Review tags above, then proceed.</div>
       <div id="export-row">
-        <button class="btn btn-blue" onclick="exportCSV()">&#11015; Export CSV row</button>
-        <button class="btn" onclick="exportJSON()">&#11015; Export JSON</button>
-        <button class="btn" onclick="copyJSON()">&#9112; Copy JSON</button>
         <button class="btn" onclick="loadNew()">&#8635; New video</button>
+        <button class="btn btn-blue" onclick="goToQC()">Next &#8594;</button>
       </div>
     </div>
   </div>
+
+  <!-- QC SCREEN -->
+  <div id="qc-card" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden">
+    <div style="padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="btn" onclick="backToTag()" style="font-size:12px;padding:5px 12px">&#8592; Back</button>
+        <span style="font-size:14px;font-weight:600">QC Review</span>
+        <span id="qc-name" style="font-size:13px;color:var(--text3)"></span>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-blue" onclick="exportCSV()">&#11015; Export CSV</button>
+        <button class="btn btn-blue" onclick="exportJSON()">&#11015; Export JSON</button>
+      </div>
+    </div>
+    <div style="display:flex;min-height:500px">
+      <div style="flex:1;background:#0c0c0c;display:flex;align-items:center;justify-content:center;position:relative">
+        <video id="qc-vid" controls style="width:100%;max-height:500px;object-fit:contain"></video>
+        <div id="qc-vid-info" style="position:absolute;bottom:7px;left:10px;font-size:11px;color:rgba(255,255,255,.6);background:rgba(0,0,0,.5);padding:2px 9px;border-radius:20px"></div>
+      </div>
+      <div style="width:320px;flex-shrink:0;border-left:1px solid var(--border);overflow-y:auto;padding:16px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:12px">Selected Tags</div>
+        <div id="qc-tags"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 </div>
 <script>
@@ -696,6 +721,46 @@ function dl(fname, content, mime) {
   a.href = URL.createObjectURL(new Blob([content], { type: mime }));
   a.download = fname;
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+function goToQC(){
+  document.getElementById('main-card').style.display='none';
+  document.getElementById('qc-card').style.display='block';
+  const sv=document.getElementById('vid');
+  const qv=document.getElementById('qc-vid');
+  qv.src=sv.src;qv.load();
+  document.getElementById('qc-name').textContent=state.name;
+  document.getElementById('qc-vid-info').textContent=state.name;
+  renderQCTags();
+}
+function backToTag(){
+  document.getElementById('qc-card').style.display='none';
+  document.getElementById('main-card').style.display='block';
+}
+function renderQCTags(){
+  const c=document.getElementById('qc-tags');c.innerHTML='';
+  const g={};
+  for(const f of state.selected){const r=f.split(':')[0];if(!g[r])g[r]=[];g[r].push(f);}
+  const cc={ego_motion:'#993556',primary_actor_class:'#3C3489',primary_actor_motion:'#854F0B',primary_infra:'#0c447c',environment:'#3B6D11'};
+  const cl={ego_motion:'Ego Motion',primary_actor_class:'Actor Class',primary_actor_motion:'Actor Motion',primary_infra:'Infrastructure',environment:'Environment'};
+  if(!Object.keys(g).length){c.innerHTML='<div style="color:var(--text3);font-size:13px">No tags selected.</div>';return;}
+  for(const[root,tags]of Object.entries(g)){
+    const s=document.createElement('div');s.style.marginBottom='16px';
+    const l=document.createElement('div');
+    l.style.cssText='font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;color:'+(cc[root]||'#999');
+    l.textContent=cl[root]||root;s.appendChild(l);
+    const ch=document.createElement('div');ch.style.cssText='display:flex;flex-wrap:wrap;gap:5px';
+    for(const t of tags){
+      const leaf=t.split(':').slice(1).join(':');
+      const chip=document.createElement('span');
+      chip.style.cssText='font-size:11px;padding:3px 11px;border-radius:20px;background:#185FA5;color:#fff;font-weight:500';
+      chip.textContent=leaf;ch.appendChild(chip);
+    }
+    s.appendChild(ch);c.appendChild(s);
+  }
+  const tot=document.createElement('div');
+  tot.style.cssText='margin-top:16px;padding-top:12px;border-top:1px solid rgba(0,0,0,.09);font-size:12px;color:var(--text3)';
+  tot.textContent=state.selected.size+' tags selected';c.appendChild(tot);
 }
 </script>
 </body>
